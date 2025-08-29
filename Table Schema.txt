@@ -1,0 +1,34 @@
+Orders Schema
+
+CREATE TABLE Orders (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    product_id VARCHAR(255),
+    quantity INT NOT NULL CHECK (quantity >= 1),
+    total_price DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) CHECK (status IN ('PROCESSING', 'SHIPPED', 'CANCELED')),
+    user VARCHAR(255) NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES Product(id)
+);
+
+
+product Schema
+
+CREATE TABLE Product (
+    id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL CHECK (price > 0),
+    quantity INT NOT NULL CHECK (quantity >= 0),
+    user VARCHAR(255) NOT NULL
+);
+
+
+User_modelSchema
+
+CREATE TABLE UserModel (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(20) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(10) NOT NULL CHECK (role IN ('ADMIN', 'USER'))
+);
+
